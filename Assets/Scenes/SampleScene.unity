@@ -609,7 +609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 5
   chao: {fileID: 1216102181}
-  jumpForce: 500
+  jumpForce: 450
 --- !u!50 &1746321430
 Rigidbody2D:
   serializedVersion: 4
