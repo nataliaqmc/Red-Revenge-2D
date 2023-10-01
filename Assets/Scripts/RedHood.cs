@@ -22,11 +22,13 @@ public class RedHood : MonoBehaviour
     private bool ataque1 = true;
     private bool podeAtacar1 = false;
     private float ultimoAtaque1;
+    private AtaqueEspada espada;
 
     //Ataque2
     private bool ataque2 = true;
     private bool podeAtacar2 = false;
     private float ultimoAtaque2;
+    private AtaqueMachado machado;
 
     //Ataque3
     private bool ataque3 = true;
@@ -40,6 +42,8 @@ public class RedHood : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         speed = maxSpeed;
         anim = GetComponent<Animator>();
+        espada = GetComponentInChildren<AtaqueEspada>();
+        machado = GetComponentInChildren<AtaqueMachado>();
         flecha = GetComponentInChildren<AtaqueFlecha>();
         
     }
@@ -109,12 +113,14 @@ public class RedHood : MonoBehaviour
         }
 
         if (podeAtacar1){
+            espada.Espada();
             rb.velocity = Vector2.zero;
             anim.SetTrigger("ataque1");
             podeAtacar1 = false;
         }
 
         if (podeAtacar2){
+            machado.Machado();
             rb.velocity = Vector2.zero;
             anim.SetTrigger("ataque2");
             podeAtacar2 = false;
