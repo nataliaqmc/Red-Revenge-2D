@@ -22,6 +22,16 @@ public class RedHood : MonoBehaviour
     private bool podeAtacar1 = false;
     private float ultimoAtaque1;
 
+    //Ataque2
+    private bool ataque2 = true;
+    private bool podeAtacar2 = false;
+    private float ultimoAtaque2;
+
+    //Ataque3
+    private bool ataque3 = true;
+    private bool podeAtacar3 = false;
+    private float ultimoAtaque3;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -50,7 +60,7 @@ public class RedHood : MonoBehaviour
             }
         }
 
-         if (ataque1 && Input.GetKeyDown(KeyCode.Z))
+        if (ataque1 && Input.GetKeyDown(KeyCode.Z))
         {
             ataque1 = false;
             podeAtacar1 = true;
@@ -59,6 +69,28 @@ public class RedHood : MonoBehaviour
         if (!ataque1 && Time.time - ultimoAtaque1 >= 0.6f)
         {
             ataque1 = true;
+        }
+
+        if (ataque2 && Input.GetKeyDown(KeyCode.X))
+        {
+            ataque2 = false;
+            podeAtacar2 = true;
+            ultimoAtaque2 = Time.time;
+        }
+        if (!ataque2 && Time.time - ultimoAtaque2 >= 3f)
+        {
+            ataque2 = true;
+        }
+
+        if (ataque3 && Input.GetKeyDown(KeyCode.C))
+        {
+            ataque3 = false;
+            podeAtacar3 = true;
+            ultimoAtaque3 = Time.time;
+        }
+        if (!ataque3 && Time.time - ultimoAtaque3 >= 0.8f)
+        {
+            ataque3 = true;
         }
     }
 
@@ -76,6 +108,18 @@ public class RedHood : MonoBehaviour
             rb.velocity = Vector2.zero;
             anim.SetTrigger("ataque1");
             podeAtacar1 = false;
+        }
+
+        if (podeAtacar2){
+            rb.velocity = Vector2.zero;
+            anim.SetTrigger("ataque2");
+            podeAtacar2 = false;
+        }
+
+        if (podeAtacar3){
+            rb.velocity = Vector2.zero;
+            anim.SetTrigger("ataque3");
+            podeAtacar3 = false;
         }
 
         if (jump)
