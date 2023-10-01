@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public class RedHood : MonoBehaviour
 {
@@ -31,12 +32,15 @@ public class RedHood : MonoBehaviour
     private bool ataque3 = true;
     private bool podeAtacar3 = false;
     private float ultimoAtaque3;
+    private AtaqueFlecha flecha;
+    private int direcaoFlecha = 1;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         speed = maxSpeed;
         anim = GetComponent<Animator>();
+        flecha = GetComponentInChildren<AtaqueFlecha>();
         
     }
 
@@ -117,6 +121,8 @@ public class RedHood : MonoBehaviour
         }
 
         if (podeAtacar3){
+            AtaqueFlecha novaFlecha = Instantiate(flecha, flecha.transform.position, Quaternion.identity);
+            novaFlecha.Flecha(direcaoFlecha);
             rb.velocity = Vector2.zero;
             anim.SetTrigger("ataque3");
             podeAtacar3 = false;
@@ -137,5 +143,6 @@ public class RedHood : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
+        direcaoFlecha *=-1;
     }
 }
