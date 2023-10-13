@@ -25,4 +25,14 @@ public class AtaqueMachado : MonoBehaviour
         startTime = Time.time;
         anim.Play("machado");
     }
+
+     public void OnTriggerEnter2D(Collider2D other)
+    {
+        Inimigo inimigo = other.GetComponent<Inimigo>();
+        if (inimigo != null)
+        {
+            inimigo.Dano(damage);
+        }
+
+    }
 }

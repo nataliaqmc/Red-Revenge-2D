@@ -26,4 +26,14 @@ public class AtaqueEspada : MonoBehaviour
         startTime = Time.time;
         anim.Play("espada");
     }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        Inimigo inimigo = other.GetComponent<Inimigo>();
+        if (inimigo != null)
+        {
+            inimigo.Dano(damage);
+        }
+
+    }
 }

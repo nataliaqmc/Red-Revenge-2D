@@ -9,12 +9,14 @@ public class RedHood : MonoBehaviour
     public float maxSpeed = 5;
     public Transform chao;
     public float jumpForce;
+    public int vida = 700;
 
     private Rigidbody2D rb;
     private float speed;
     private bool facingRight = true;
     private bool onGround;
     private bool jump = false;
+    private bool move = false;
     private bool doubleJump;
     private Animator anim;
 
@@ -73,10 +75,12 @@ public class RedHood : MonoBehaviour
             ataque1 = false;
             podeAtacar1 = true;
             ultimoAtaque1 = Time.time;
+            move = true;
         }
         if (!ataque1 && Time.time - ultimoAtaque1 >= 0.6f)
         {
             ataque1 = true;
+            move = false;
         }
 
         if (ataque2 && Input.GetKeyDown(KeyCode.X))
@@ -84,10 +88,12 @@ public class RedHood : MonoBehaviour
             ataque2 = false;
             podeAtacar2 = true;
             ultimoAtaque2 = Time.time;
+            move = true;
         }
         if (!ataque2 && Time.time - ultimoAtaque2 >= 3f)
         {
             ataque2 = true;
+            move = false;
         }
 
         if (ataque3 && Input.GetKeyDown(KeyCode.C))
@@ -95,10 +101,12 @@ public class RedHood : MonoBehaviour
             ataque3 = false;
             podeAtacar3 = true;
             ultimoAtaque3 = Time.time;
+            move = true;
         }
         if (!ataque3 && Time.time - ultimoAtaque3 >= 0.8f)
         {
             ataque3 = true;
+            move = false;
         }
     }
 
@@ -110,6 +118,10 @@ public class RedHood : MonoBehaviour
         if ((h > 0 && !facingRight) || (h < 0 && facingRight))
         {
             Flip();
+        }
+
+        if (move){
+            rb.velocity = new Vector2(0, rb.velocity.y);
         }
 
         if (podeAtacar1){
@@ -150,5 +162,20 @@ public class RedHood : MonoBehaviour
         scale.x *= -1;
         transform.localScale = scale;
         direcaoFlecha *=-1;
+    }
+
+    public void Dano(int damage)
+    {
+        vida -= damage;
+        if (vida <= 0)
+        {
+            anim.SetTrigger("morte");
+        }
+        else
+        {
+            //rb.AddForce(Vector2.right * 5 * direction, ForceMode2D.Impulse);
+            anim.SetTrigger("dano");
+
+        }
     }
 }
