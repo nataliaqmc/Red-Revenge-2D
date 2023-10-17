@@ -90,10 +90,14 @@ public class RedHood : MonoBehaviour
             ultimoAtaque2 = Time.time;
             move = true;
         }
+        if (!ataque2 && Time.time - ultimoAtaque2 >= 1.5f)
+        {
+            move = false;
+        }
+
         if (!ataque2 && Time.time - ultimoAtaque2 >= 3f)
         {
             ataque2 = true;
-            move = false;
         }
 
         if (ataque3 && Input.GetKeyDown(KeyCode.C))

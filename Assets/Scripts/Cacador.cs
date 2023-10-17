@@ -14,7 +14,7 @@ public class Cacador : Inimigo
     private bool morto = false;
     private SpriteRenderer sprite;
 
-    //private NightBorneAttack attack1;
+    private AtaqueCacador ataqueCacador;
     private bool podeAtacar = true;
     private float tempoAtaque;
     private bool comeco = true;
@@ -25,7 +25,7 @@ public class Cacador : Inimigo
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
-        //attack1 = GetComponentInChildren<NightBorneAttack>();
+        ataqueCacador = GetComponentInChildren<AtaqueCacador>();
     }
 
     // Update is called once per frame
@@ -65,7 +65,7 @@ public class Cacador : Inimigo
             {
                 anim.SetTrigger("ataque");
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
-                //attack1.Blade();
+                ataqueCacador.Machado();
                 podeAtacar = false;
                 tempoAtaque = Time.time;
             }
@@ -80,7 +80,7 @@ public class Cacador : Inimigo
             {
                 anim.SetTrigger("ataque");
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
-                //attack1.Blade();
+                ataqueCacador.Machado();
                 podeAtacar = false;
                 tempoAtaque = Time.time;
             }
