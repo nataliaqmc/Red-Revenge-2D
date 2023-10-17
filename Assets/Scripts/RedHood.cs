@@ -2,15 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.VisualScripting;
-
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 public class RedHood : MonoBehaviour
 {
     // Start is called before the first frame update
     public float maxSpeed = 5;
     public Transform chao;
     public float jumpForce;
-    public int vida = 700;
+    public int vidaMaxima = 700;
+    public static int doces = 0;
 
+    public TextMeshProUGUI QuantidadeDoces;
+
+    private int vida;
+
+    public Image Barfile;
     private Rigidbody2D rb;
     private float speed;
     private bool facingRight = true;
@@ -41,19 +49,25 @@ public class RedHood : MonoBehaviour
 
     void Start()
     {
+        QuantidadeDoces.text = doces.ToString();
+        vida = vidaMaxima;
         rb = GetComponent<Rigidbody2D>();
         speed = maxSpeed;
         anim = GetComponent<Animator>();
         espada = GetComponentInChildren<AtaqueEspada>();
         machado = GetComponentInChildren<AtaqueMachado>();
-        flecha = GetComponentInChildren<AtaqueFlecha>();
-        
+        flecha = GetComponentInChildren<AtaqueFlecha>();   
     }
 
     // Update is called once per frame
     void Update()
     {
         onGround = Physics2D.Linecast(transform.position, chao.position, 1 << LayerMask.NameToLayer("Chao"));
+
+        if (transform.position.y < -10){
+            string nomeDaCenaAtual = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(nomeDaCenaAtual);
+        }
         if (onGround)
         {
             anim.SetTrigger("chao");
@@ -168,18 +182,34 @@ public class RedHood : MonoBehaviour
         direcaoFlecha *=-1;
     }
 
+    public   IEnumerator MorteCoroutine()
+    {
+        for (float i = 0; i < 0.2f; i += 0.2f)
+        {
+            yield return new WaitForSeconds(1f);
+            string nomeDaCenaAtual = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(nomeDaCenaAtual);
+        }
+    }
+
+    public void ColetaDoce(){
+        doces+= 1;
+        QuantidadeDoces.text = doces.ToString();
+    }
+
     public void Dano(int damage)
     {
         vida -= damage;
+        Barfile.fillAmount = (float) vida/vidaMaxima;
         if (vida <= 0)
         {
             anim.SetTrigger("morte");
+            StartCoroutine(MorteCoroutine());
         }
         else
         {
             //rb.AddForce(Vector2.right * 5 * direction, ForceMode2D.Impulse);
             anim.SetTrigger("dano");
-
         }
     }
 }

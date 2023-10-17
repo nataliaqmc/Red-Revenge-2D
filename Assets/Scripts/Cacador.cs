@@ -38,7 +38,7 @@ public class Cacador : Inimigo
             {
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
                 anim.SetFloat("velocidade", Mathf.Abs(rb.velocity.x));
-                if (Mathf.Abs(distanciaJogador.x) < 2)
+                if (Mathf.Abs(distanciaJogador.x) < 1)
                 {
                     anim.SetFloat("velocidade", 0f);
                     if (estado == 0)
@@ -91,7 +91,7 @@ public class Cacador : Inimigo
                 comeco = true;
             }
 
-            if (estado == 3 && Time.time - tempoAtaque > 5f && !comeco)
+            if (estado == 3 && Time.time - tempoAtaque > 2.5f && !comeco)
             {
                 podeAtacar = true;
                 comeco = true;

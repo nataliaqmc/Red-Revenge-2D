@@ -29,7 +29,9 @@ public class AtaquePassaro : MonoBehaviour
             if (Time.time - startTime >= 2f)
             {
                 active = false;
-                Destroy(gameObject);
+                if (gameObject != null){
+                    Destroy(gameObject);
+                }
             }
         }
     }
@@ -60,7 +62,9 @@ public class AtaquePassaro : MonoBehaviour
         if (inimigo != null)
         {
             inimigo.Dano(damage);
-            Destroy(gameObject);
+            if (gameObject != null){
+                Destroy(gameObject);
+            }
         }
 
     }

@@ -35,6 +35,7 @@ public class Doce : MonoBehaviour
         RedHood redhood = other.GetComponent<RedHood>();
         if (redhood != null)
         {
+            redhood.ColetaDoce();
             Destroy(gameObject);
             //redhood.Dano(dano);
         }
