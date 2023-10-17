@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cobra : Inimigo
+public class Yeti : Inimigo
 {
    public float velocidade = 5;
     public int vida = 150;
@@ -32,18 +32,18 @@ public class Cobra : Inimigo
         {
             distanciaDoPlayer = player.transform.position - transform.position;
             if (ataque){
+                anim.SetFloat("velocidade", 0.02f);
                 Vector2 direcaoVetor = Vector2.right;
                 if (direcao){
-                    transform.Translate(direcaoVetor.normalized * -2.5f* Time.deltaTime);
+                    transform.Translate(direcaoVetor.normalized * -3* Time.deltaTime);
                 }
                 else{
-                    transform.Translate(direcaoVetor.normalized * 2.5f* Time.deltaTime);
+                    transform.Translate(direcaoVetor.normalized * 3* Time.deltaTime);
                 }
-                anim.SetFloat("velocidade", 0.02f);
                 StartCoroutine(AtaqueRoutine());
                 tempoAtaque = Time.time;
             }
-             if (!ataque && Time.time - tempoAtaque >= 2.5f)
+             if (!ataque && Time.time - tempoAtaque >= 2.2f)
             {
                 anim.SetTrigger("ataque");
                 ataque = true;
@@ -96,7 +96,9 @@ public class Cobra : Inimigo
     {
         for (float i = 0; i < 0.2f; i += 0.2f)
         {
-            yield return new WaitForSeconds(2.3f);
+            yield return new WaitForSeconds(1.2f);
+            anim.SetFloat("velocidade", 0f);
+            yield return new WaitForSeconds(0.3f);
         }
         ataque = false;
     }

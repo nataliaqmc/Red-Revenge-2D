@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cobra : Inimigo
+public class Lobinho : Inimigo
 {
-   public float velocidade = 5;
-    public int vida = 150;
-    public int dano = 25;
+   public float velocidade = 3;
+    public int vida = 300;
+    public int dano = 50;
     private Transform player;
     private Rigidbody2D rb;
     private Animator anim;
@@ -15,9 +15,6 @@ public class Cobra : Inimigo
     private bool morto = false;
     private SpriteRenderer sprite;
     private bool move = true;
-    private bool ataque = true;
-    private bool direcao = true;
-    private float tempoAtaque;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -31,23 +28,21 @@ public class Cobra : Inimigo
         if (!morto && move)
         {
             distanciaDoPlayer = player.transform.position - transform.position;
-            if (ataque){
-                Vector2 direcaoVetor = Vector2.right;
-                if (direcao){
-                    transform.Translate(direcaoVetor.normalized * -2.5f* Time.deltaTime);
-                }
-                else{
-                    transform.Translate(direcaoVetor.normalized * 2.5f* Time.deltaTime);
-                }
-                anim.SetFloat("velocidade", 0.02f);
-                StartCoroutine(AtaqueRoutine());
-                tempoAtaque = Time.time;
-            }
-             if (!ataque && Time.time - tempoAtaque >= 2.5f)
+            if (Mathf.Abs(distanciaDoPlayer.x) < 12 && 
+            Mathf.Abs(distanciaDoPlayer.x) > 1.5f &&
+             Mathf.Abs(distanciaDoPlayer.y) < 5)
             {
-                anim.SetTrigger("ataque");
-                ataque = true;
-                direcao = !direcao;
+                rb.velocity = new Vector2(velocidade * (distanciaDoPlayer.x) / Mathf.Abs(distanciaDoPlayer.x), rb.velocity.y);
+                anim.SetFloat("velocidade", Mathf.Abs(rb.velocity.x));
+            }
+            if (Mathf.Abs(distanciaDoPlayer.x) < 1.5f)
+            {
+                rb.velocity = new Vector2(velocidade * (distanciaDoPlayer.x) / (1.5f*Mathf.Abs(distanciaDoPlayer.x)), rb.velocity.y);
+                anim.SetTrigger("Ataque");
+            }
+            float h = rb.velocity.x;
+            if ((h > 0 && !facingRight) || (h < 0 && facingRight))
+            {
                 Flip();
             }
         }
@@ -55,6 +50,7 @@ public class Cobra : Inimigo
     }
     public override void Flip()
     {
+        facingRight = !facingRight;
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
@@ -68,7 +64,7 @@ public class Cobra : Inimigo
             sprite.color = Color.red;
             morto = true;
             rb.velocity = Vector2.zero;
-            anim.SetTrigger("morte");
+            anim.SetTrigger("Morte");
         }
         else
         {
@@ -92,15 +88,6 @@ public class Cobra : Inimigo
         move = true;
     }
 
-    public IEnumerator AtaqueRoutine()
-    {
-        for (float i = 0; i < 0.2f; i += 0.2f)
-        {
-            yield return new WaitForSeconds(2.3f);
-        }
-        ataque = false;
-    }
-
     public void OnCollisionEnter2D(Collision2D other)
     {
         RedHood redhood = other.gameObject.GetComponent<RedHood>();
@@ -116,7 +103,7 @@ public class Cobra : Inimigo
     {
         move = false;
         rb.velocity = Vector2.zero;
-        //anim.SetFloat("velocidade", Mathf.Abs(rb.velocity.x));
+        anim.SetFloat("velocidade", Mathf.Abs(rb.velocity.x));
         for (float i = 0; i < 0.2f; i += 0.2f)
         {
             yield return new WaitForSeconds(0.8f);
