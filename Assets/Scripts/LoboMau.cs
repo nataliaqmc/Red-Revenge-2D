@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Cacador : Inimigo
+public class LoboMau : Inimigo
 {
      public int vida = 3000;
     public int dano = 20;
@@ -15,7 +15,9 @@ public class Cacador : Inimigo
     private bool morto = false;
     private SpriteRenderer sprite;
 
-    private AtaqueCacador ataqueCacador;
+    private  AtaqueLobo1 Ataque1;
+    private  AtaqueLobo2 Ataque2;
+    private  AtaqueLobo3 Ataque3;
     private bool podeAtacar = true;
     private float tempoAtaque;
     private bool comeco = true;
@@ -26,7 +28,9 @@ public class Cacador : Inimigo
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
-        ataqueCacador = GetComponentInChildren<AtaqueCacador>();
+        Ataque1 = GetComponentInChildren<AtaqueLobo1>();
+        Ataque2 = GetComponentInChildren<AtaqueLobo2>();
+        Ataque3 = GetComponentInChildren<AtaqueLobo3>();
     }
 
     // Update is called once per frame
@@ -39,7 +43,7 @@ public class Cacador : Inimigo
             {
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
                 anim.SetFloat("velocidade", Mathf.Abs(rb.velocity.x));
-                if (Mathf.Abs(distanciaJogador.x) < 1)
+                if (Mathf.Abs(distanciaJogador.x) < 1.5f)
                 {
                     anim.SetFloat("velocidade", 0f);
                     if (estado == 0)
@@ -56,6 +60,10 @@ public class Cacador : Inimigo
                     }
                     else if (estado == 3)
                     {
+                        estado = 4;
+                    }
+                    else if (estado == 4)
+                    {
                         estado = 1;
                     }
                     comeco = false;
@@ -64,9 +72,9 @@ public class Cacador : Inimigo
             }
             if (estado == 1 && podeAtacar && !comeco)
             {
-                anim.SetTrigger("ataque");
+                anim.SetTrigger("ataque1");
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
-                ataqueCacador.Machado();
+                Ataque1.Machado();
                 podeAtacar = false;
                 tempoAtaque = Time.time;
             }
@@ -79,9 +87,9 @@ public class Cacador : Inimigo
 
             if (estado == 2 && podeAtacar && !comeco)
             {
-                anim.SetTrigger("ataque");
+                anim.SetTrigger("ataque2");
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
-                ataqueCacador.Machado();
+                Ataque2.Machado();
                 podeAtacar = false;
                 tempoAtaque = Time.time;
             }
@@ -92,7 +100,22 @@ public class Cacador : Inimigo
                 comeco = true;
             }
 
-            if (estado == 3 && Time.time - tempoAtaque > 2.5f && !comeco)
+            if (estado == 3 && podeAtacar && !comeco)
+            {
+                anim.SetTrigger("ataque3");
+                rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
+                Ataque3.Machado();
+                podeAtacar = false;
+                tempoAtaque = Time.time;
+            }
+
+            if (estado == 3 && Time.time - tempoAtaque > 1.5f && !comeco)
+            {
+                podeAtacar = true;
+                comeco = true;
+            }
+
+            if (estado == 4 && Time.time - tempoAtaque > 2f && !comeco)
             {
                 podeAtacar = true;
                 comeco = true;
@@ -167,7 +190,7 @@ public class Cacador : Inimigo
 
     public override void Morte()
     {
-        SceneManager.LoadScene("Scenes/Floresta");
+        //SceneManager.LoadScene("Scenes/Floresta");
         Destroy(gameObject);
     }
 }

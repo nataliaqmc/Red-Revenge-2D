@@ -7,6 +7,8 @@ public class Tronco : Inimigo
    public float velocidade = 5;
     public int vida = 150;
     public int dano = 25;
+
+    public GameObject docePrefab;
     private Transform player;
     private Rigidbody2D rb;
     private Animator anim;
@@ -125,6 +127,7 @@ public class Tronco : Inimigo
     }
     public override void Morte()
     {
+        Instantiate(docePrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

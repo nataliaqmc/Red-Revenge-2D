@@ -7,6 +7,8 @@ public class Passaro : Inimigo
    public float velocidade = 5;
     public int vida = 150;
     public int dano = 25;
+
+    public GameObject docePrefab;
     private Transform player;
     private Rigidbody2D rb;
     private Animator anim;
@@ -37,16 +39,19 @@ public class Passaro : Inimigo
         {
             distanciaDoPlayer = player.transform.position - transform.position;
             if (pedra){
-                AtaquePassaro pedraAtual = Instantiate(ataquePedra, ataquePedra.transform.position, Quaternion.identity);
-                float directionBall = 1f;
-                if (direcao){
-                    directionBall = -1f;
+                if (ataquePedra != null){
+                    AtaquePassaro pedraAtual = Instantiate(ataquePedra, ataquePedra.transform.position, Quaternion.identity);
+                    float directionBall = 1f;
+                    anim.SetTrigger("ataque");
+                    if (direcao){
+                        directionBall = -1f;
+                    }
+                    if (pedraAtual != null){
+                        pedraAtual.Pedra(directionBall);
+                    }
+                    pedra = false;
+                    tempoPedra = Time.time;
                 }
-                pedraAtual.Pedra(directionBall);
-                pedra = false;
-                tempoPedra = Time.time;
-                anim.SetTrigger("ataque");
-
             }
             if (!pedra && Time.time - tempoPedra >= 3f){
                 pedra = true;
@@ -144,6 +149,7 @@ public class Passaro : Inimigo
     }
     public override void Morte()
     {
+        Instantiate(docePrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

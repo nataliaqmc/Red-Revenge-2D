@@ -7,6 +7,8 @@ public class Urso : Inimigo
    public float velocidade = 3;
     public int vida = 300;
     public int dano = 50;
+
+    public GameObject docePrefab;
     private Transform player;
     private Rigidbody2D rb;
     private Animator anim;
@@ -15,6 +17,7 @@ public class Urso : Inimigo
     private bool morto = false;
     private SpriteRenderer sprite;
     private bool move = true;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -112,6 +115,7 @@ public class Urso : Inimigo
     }
     public override void Morte()
     {
+        Instantiate(docePrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

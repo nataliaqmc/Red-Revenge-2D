@@ -7,6 +7,8 @@ public class Lobinho : Inimigo
    public float velocidade = 3;
     public int vida = 300;
     public int dano = 50;
+
+    public GameObject docePrefab;
     private Transform player;
     private Rigidbody2D rb;
     private Animator anim;
@@ -112,6 +114,7 @@ public class Lobinho : Inimigo
     }
     public override void Morte()
     {
+        Instantiate(docePrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }
