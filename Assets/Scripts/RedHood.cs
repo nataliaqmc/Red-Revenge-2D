@@ -8,7 +8,14 @@ using TMPro;
 public class RedHood : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float maxSpeed = 5;
+
+    public AudioSource somespada;
+    public AudioSource upgrade;
+    public AudioSource doce;
+    public AudioSource dano;
+    public AudioSource somflecha;
+    //public AudioSource somespada;
+    public float maxSpeed = 3.75f;
     public Transform chao;
     public float jumpForce;
     public int vidaMaxima = 700;
@@ -20,7 +27,7 @@ public class RedHood : MonoBehaviour
 
     public Image Barfile;
     private Rigidbody2D rb;
-    private float speed;
+    public static float speed;
     private bool facingRight = true;
     private bool onGround;
     private bool jump = false;
@@ -40,6 +47,8 @@ public class RedHood : MonoBehaviour
     private float ultimoAtaque2;
     private AtaqueMachado machado;
 
+    private SpriteRenderer sprite;
+
     //Ataque3
     private bool ataque3 = true;
     private bool podeAtacar3 = false;
@@ -49,6 +58,7 @@ public class RedHood : MonoBehaviour
 
     void Start()
     {
+        sprite = GetComponent<SpriteRenderer>();
         QuantidadeDoces.text = doces.ToString();
         vida = vidaMaxima;
         rb = GetComponent<Rigidbody2D>();
@@ -65,6 +75,8 @@ public class RedHood : MonoBehaviour
         onGround = Physics2D.Linecast(transform.position, chao.position, 1 << LayerMask.NameToLayer("Chao"));
 
         if (transform.position.y < -10){
+            doces = 0;
+            QuantidadeDoces.text = doces.ToString();
             string nomeDaCenaAtual = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(nomeDaCenaAtual);
         }
@@ -84,8 +96,32 @@ public class RedHood : MonoBehaviour
             }
         }
 
+        if (doces >= 5 && Input.GetKeyDown(KeyCode.T)){
+            upgrade.Play();
+            doces -= 5;
+            QuantidadeDoces.text = doces.ToString();
+            StartCoroutine(AumentaVida());
+            vida += 100;
+            if (vida >= 700){
+                vida = 700;
+            }
+            Barfile.fillAmount = (float) vida/vidaMaxima;
+        }
+
+        if (doces >= 5 && Input.GetKeyDown(KeyCode.U)){
+            upgrade.Play();
+            doces -= 5;
+            QuantidadeDoces.text = doces.ToString();
+            speed+=0.75f;
+            if (speed >= 10){
+                speed = 10;
+            }
+            StartCoroutine(Aumentavelocidade());
+        }
+
         if (ataque1 && Input.GetKeyDown(KeyCode.Z))
         {
+            somespada.Play();
             ataque1 = false;
             podeAtacar1 = true;
             ultimoAtaque1 = Time.time;
@@ -100,6 +136,7 @@ public class RedHood : MonoBehaviour
         if (ataque2 && Input.GetKeyDown(KeyCode.X))
         {
             ataque2 = false;
+            somespada.Play();
             podeAtacar2 = true;
             ultimoAtaque2 = Time.time;
             move = true;
@@ -116,6 +153,7 @@ public class RedHood : MonoBehaviour
 
         if (ataque3 && Input.GetKeyDown(KeyCode.C))
         {
+            somflecha.Play();
             ataque3 = false;
             podeAtacar3 = true;
             ultimoAtaque3 = Time.time;
@@ -192,7 +230,28 @@ public class RedHood : MonoBehaviour
         }
     }
 
+        public IEnumerator AumentaVida(){
+            for (float i = 0; i < 0.2f; i += 0.2f)
+        {
+            sprite.color = Color.yellow;
+            yield return new WaitForSeconds(1f);
+            sprite.color = Color.white;
+            
+        }
+    }
+
+    public IEnumerator Aumentavelocidade(){
+            for (float i = 0; i < 0.2f; i += 0.2f)
+        {
+            sprite.color = Color.blue;
+            yield return new WaitForSeconds(1f);
+            sprite.color = Color.white;
+            
+        }
+    }
+
     public void ColetaDoce(){
+        doce.Play();
         doces+= 1;
         QuantidadeDoces.text = doces.ToString();
     }
@@ -201,9 +260,12 @@ public class RedHood : MonoBehaviour
     {
         vida -= damage;
         Barfile.fillAmount = (float) vida/vidaMaxima;
+        dano.Play();
         if (vida <= 0)
         {
             anim.SetTrigger("morte");
+            doces = 0;
+            QuantidadeDoces.text = doces.ToString();
             StartCoroutine(MorteCoroutine());
         }
         else

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Tronco : Inimigo
 {
    public float velocidade = 5;
+
+   public AudioSource som;
     public int vida = 150;
     public int dano = 25;
 
@@ -48,6 +50,7 @@ public class Tronco : Inimigo
              if (!ataque && Time.time - tempoAtaque >= 2f)
             {
                 anim.SetTrigger("Ataque");
+                som.Play();
                 ataque = true;
                 direcao = !direcao;
                 Flip();

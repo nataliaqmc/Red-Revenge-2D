@@ -8,6 +8,7 @@ public class Yeti : Inimigo
     public int vida = 150;
     public int dano = 25;
 
+    public AudioSource som;
     public GameObject docePrefab;
     private Transform player;
     private Rigidbody2D rb;
@@ -48,6 +49,7 @@ public class Yeti : Inimigo
              if (!ataque && Time.time - tempoAtaque >= 2.2f)
             {
                 anim.SetTrigger("ataque");
+                som.Play();
                 ataque = true;
                 direcao = !direcao;
                 Flip();

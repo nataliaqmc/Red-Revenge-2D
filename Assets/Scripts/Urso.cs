@@ -5,6 +5,7 @@ using UnityEngine;
 public class Urso : Inimigo
 {
    public float velocidade = 3;
+   public AudioSource som;
     public int vida = 300;
     public int dano = 50;
 
@@ -42,6 +43,7 @@ public class Urso : Inimigo
             {
                 rb.velocity = new Vector2(velocidade * (distanciaDoPlayer.x) / (1.5f*Mathf.Abs(distanciaDoPlayer.x)), rb.velocity.y);
                 anim.SetTrigger("Ataque");
+                som.Play();
             }
             float h = rb.velocity.x;
             if ((h > 0 && !facingRight) || (h < 0 && facingRight))

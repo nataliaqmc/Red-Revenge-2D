@@ -5,7 +5,7 @@ using UnityEngine;
 public class AtaqueMachado : MonoBehaviour
 {
     private Animator anim;
-    private int damage = 120;
+    private int damage = 95;
     public Vector2 direction = Vector2.right;
     private float startTime;
     void Start(){}

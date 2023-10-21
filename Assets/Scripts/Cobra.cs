@@ -5,6 +5,8 @@ using UnityEngine;
 public class Cobra : Inimigo
 {
    public float velocidade = 5;
+
+   public AudioSource som;
     public int vida = 150;
     public int dano = 25;
 
@@ -48,6 +50,7 @@ public class Cobra : Inimigo
              if (!ataque && Time.time - tempoAtaque >= 2.5f)
             {
                 anim.SetTrigger("ataque");
+                som.Play();
                 ataque = true;
                 direcao = !direcao;
                 Flip();

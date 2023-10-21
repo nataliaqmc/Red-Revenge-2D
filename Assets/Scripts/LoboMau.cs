@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class LoboMau : Inimigo
 {
+
+    public AudioSource som;
+    public AudioSource som1;
      public int vida = 3000;
     public int dano = 20;
     private Transform player;
@@ -43,6 +46,7 @@ public class LoboMau : Inimigo
             {
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
                 anim.SetFloat("velocidade", Mathf.Abs(rb.velocity.x));
+                som1.Play();
                 if (Mathf.Abs(distanciaJogador.x) < 1.5f)
                 {
                     anim.SetFloat("velocidade", 0f);
@@ -73,6 +77,7 @@ public class LoboMau : Inimigo
             if (estado == 1 && podeAtacar && !comeco)
             {
                 anim.SetTrigger("ataque1");
+                som.Play();
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
                 Ataque1.Machado();
                 podeAtacar = false;
@@ -88,6 +93,7 @@ public class LoboMau : Inimigo
             if (estado == 2 && podeAtacar && !comeco)
             {
                 anim.SetTrigger("ataque2");
+                som.Play();
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
                 Ataque2.Machado();
                 podeAtacar = false;
@@ -103,6 +109,7 @@ public class LoboMau : Inimigo
             if (estado == 3 && podeAtacar && !comeco)
             {
                 anim.SetTrigger("ataque3");
+                som.Play();
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
                 Ataque3.Machado();
                 podeAtacar = false;
@@ -190,7 +197,7 @@ public class LoboMau : Inimigo
 
     public override void Morte()
     {
-        //SceneManager.LoadScene("Scenes/Floresta");
+        SceneManager.LoadScene("Scenes/FInal");
         Destroy(gameObject);
     }
 }

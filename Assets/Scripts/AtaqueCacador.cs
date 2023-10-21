@@ -5,7 +5,7 @@ using UnityEngine;
 public class AtaqueCacador : MonoBehaviour
 {
       private Animator anim;
-    private int dano = 100;
+    private int dano = 80;
     public Vector2 direcao = Vector2.right;
     private float comeco;
     void Start(){}

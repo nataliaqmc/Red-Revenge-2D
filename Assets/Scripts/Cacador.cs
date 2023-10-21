@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Cacador : Inimigo
 {
+
+    public AudioSource som;
      public int vida = 3000;
     public int dano = 20;
     private Transform player;
@@ -65,6 +67,7 @@ public class Cacador : Inimigo
             if (estado == 1 && podeAtacar && !comeco)
             {
                 anim.SetTrigger("ataque");
+                som.Play();
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
                 ataqueCacador.Machado();
                 podeAtacar = false;
@@ -80,6 +83,7 @@ public class Cacador : Inimigo
             if (estado == 2 && podeAtacar && !comeco)
             {
                 anim.SetTrigger("ataque");
+                som.Play();
                 rb.velocity = new Vector2(3f * (distanciaJogador.x) / Mathf.Abs(distanciaJogador.x), rb.velocity.y);
                 ataqueCacador.Machado();
                 podeAtacar = false;

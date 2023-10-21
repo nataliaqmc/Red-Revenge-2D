@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Passaro : Inimigo
 {
+    public AudioSource som;
    public float velocidade = 5;
     public int vida = 150;
     public int dano = 25;
@@ -42,6 +43,7 @@ public class Passaro : Inimigo
                 if (ataquePedra != null){
                     AtaquePassaro pedraAtual = Instantiate(ataquePedra, ataquePedra.transform.position, Quaternion.identity);
                     float directionBall = 1f;
+                    //som.Play();
                     anim.SetTrigger("ataque");
                     if (direcao){
                         directionBall = -1f;

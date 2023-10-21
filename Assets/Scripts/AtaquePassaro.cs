@@ -61,6 +61,7 @@ public class AtaquePassaro : MonoBehaviour
         RedHood inimigo = other.GetComponent<RedHood>();
         if (inimigo != null)
         {
+            
             inimigo.Dano(damage);
             if (gameObject != null){
                 Destroy(gameObject);
