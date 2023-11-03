@@ -9,6 +9,7 @@ public class RedHood : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public FixedJoystick analogico;
     public AudioSource somespada;
     public AudioSource upgrade;
     public AudioSource doce;
@@ -168,7 +169,8 @@ public class RedHood : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float h = Input.GetAxisRaw("Horizontal");
+        //float h = Input.GetAxisRaw("Horizontal");
+        float h = analogico.Horizontal;
         rb.velocity = new Vector2(h * speed, rb.velocity.y);
         anim.SetFloat("velocidade", Mathf.Abs(h));
         if ((h > 0 && !facingRight) || (h < 0 && facingRight))
