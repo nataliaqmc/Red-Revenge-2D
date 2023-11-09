@@ -737,7 +737,13 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
+    Unity Ads: 1
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -757,10 +763,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 81780ea9-a948-4858-b674-183233db8ff7
+  cloudProjectId: d26f0a3e-49aa-4293-956c-3980b1dbb43f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Red-Revenge
+  projectName: Unity ADS
   organizationId: niveaabreu
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

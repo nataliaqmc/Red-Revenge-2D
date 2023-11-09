@@ -88,14 +88,14 @@ public class RedHood : MonoBehaviour
         }
 
 
-        if (Input.GetButtonDown("Jump") && (onGround || !doubleJump))
-        {
-            jump = true;
-            if (!doubleJump && !onGround)
-            {
-                doubleJump = true;
-            }
-        }
+        // if (Input.GetButtonDown("Jump") && (onGround || !doubleJump))
+        // {
+        //     jump = true;
+        //     if (!doubleJump && !onGround)
+        //     {
+        //         doubleJump = true;
+        //     }
+        // }
 
         if (doces >= 5 && Input.GetKeyDown(KeyCode.T)){
             upgrade.Play();
@@ -120,28 +120,28 @@ public class RedHood : MonoBehaviour
             StartCoroutine(Aumentavelocidade());
         }
 
-        if (ataque1 && Input.GetKeyDown(KeyCode.Z))
-        {
-            somespada.Play();
-            ataque1 = false;
-            podeAtacar1 = true;
-            ultimoAtaque1 = Time.time;
-            move = true;
-        }
+        // if (ataque1 && Input.GetKeyDown(KeyCode.Z))
+        // {
+        //     somespada.Play();
+        //     ataque1 = false;
+        //     podeAtacar1 = true;
+        //     ultimoAtaque1 = Time.time;
+        //     move = true;
+        // }
         if (!ataque1 && Time.time - ultimoAtaque1 >= 0.6f)
         {
             ataque1 = true;
             move = false;
         }
 
-        if (ataque2 && Input.GetKeyDown(KeyCode.X))
-        {
-            ataque2 = false;
-            somespada.Play();
-            podeAtacar2 = true;
-            ultimoAtaque2 = Time.time;
-            move = true;
-        }
+        // if (ataque2 && Input.GetKeyDown(KeyCode.X))
+        // {
+        //     ataque2 = false;
+        //     somespada.Play();
+        //     podeAtacar2 = true;
+        //     ultimoAtaque2 = Time.time;
+        //     move = true;
+        // }
         if (!ataque2 && Time.time - ultimoAtaque2 >= 1.5f)
         {
             move = false;
@@ -152,14 +152,14 @@ public class RedHood : MonoBehaviour
             ataque2 = true;
         }
 
-        if (ataque3 && Input.GetKeyDown(KeyCode.C))
-        {
-            somflecha.Play();
-            ataque3 = false;
-            podeAtacar3 = true;
-            ultimoAtaque3 = Time.time;
-            move = true;
-        }
+        // if (ataque3 && Input.GetKeyDown(KeyCode.C))
+        // {
+        //     somflecha.Play();
+        //     ataque3 = false;
+        //     podeAtacar3 = true;
+        //     ultimoAtaque3 = Time.time;
+        //     move = true;
+        // }
         if (!ataque3 && Time.time - ultimoAtaque3 >= 0.8f)
         {
             ataque3 = true;
@@ -210,6 +210,53 @@ public class RedHood : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.AddForce(Vector2.up * jumpForce);
             jump = false;
+        }
+    }
+
+    public void AtaqueEspada(){
+        if (ataque1)
+        {
+            somespada.Play();
+            ataque1 = false;
+            podeAtacar1 = true;
+            ultimoAtaque1 = Time.time;
+            move = true;
+        }
+    }
+
+    public void AtaqueMachado(){
+       if (ataque2)
+        {
+            ataque2 = false;
+            somespada.Play();
+            podeAtacar2 = true;
+            ultimoAtaque2 = Time.time;
+            move = true;
+        }
+    }
+
+    
+    public void AtaqueFlecha(){
+        if (ataque3)
+        {
+            somflecha.Play();
+            ataque3 = false;
+            podeAtacar3 = true;
+            ultimoAtaque3 = Time.time;
+            move = true;
+        }
+    }
+    
+      
+
+    public void JumpButton(){
+        if ((onGround || !doubleJump))
+        {
+            jump = true;
+            if (!doubleJump && !onGround)
+            {
+                doubleJump = true;
+            }
         }
     }
 
