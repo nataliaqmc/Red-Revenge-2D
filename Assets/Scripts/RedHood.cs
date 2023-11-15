@@ -9,7 +9,7 @@ public class RedHood : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    public FixedJoystick analogico;
+    public DynamicJoystick analogico;
     public AudioSource somespada;
     public AudioSource upgrade;
     public AudioSource doce;
