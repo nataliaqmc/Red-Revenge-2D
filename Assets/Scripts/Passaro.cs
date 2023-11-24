@@ -134,7 +134,7 @@ public class Passaro : Inimigo
         {
             StartCoroutine(ParadoRoutine());
             redhood.Dano(dano);
-            redhood.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 5 * (distanciaDoPlayer.x) / Mathf.Abs(distanciaDoPlayer.x), ForceMode2D.Impulse);
+            redhood.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 2 * (distanciaDoPlayer.x) / Mathf.Abs(distanciaDoPlayer.x), ForceMode2D.Impulse);
         }  
     }
 

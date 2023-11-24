@@ -171,7 +171,7 @@ public class Cacador : Inimigo
 
     public override void Morte()
     {
-        SceneManager.LoadScene("Scenes/Floresta");
+        SceneManager.LoadScene("Scenes/FlorestaEscura");
         Destroy(gameObject);
     }
 }

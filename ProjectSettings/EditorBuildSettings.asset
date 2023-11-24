@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FInal.unity
     guid: 0fa832c897b6cdc44bd1c8b4befd7811
+  - enabled: 1
+    path: Assets/Scenes/FlorestaEncantada.unity
+    guid: 25864c9425eb7e4468a2fcbe34b1b711
+  - enabled: 1
+    path: Assets/Scenes/FlorestaEscura.unity
+    guid: 521c7ed6951b3d84b9b73fa907c214d5
   m_configObjects: {}
