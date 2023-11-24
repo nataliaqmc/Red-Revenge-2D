@@ -33,7 +33,7 @@ public class Javali : Inimigo
         if (!morto && move)
         {
             distanciaDoPlayer = player.transform.position - transform.position;
-            if (Mathf.Abs(distanciaDoPlayer.x) < 12 && 
+            if (Mathf.Abs(distanciaDoPlayer.x) < 7 && 
             Mathf.Abs(distanciaDoPlayer.x) > 1.5f &&
              Mathf.Abs(distanciaDoPlayer.y) < 5)
             {
