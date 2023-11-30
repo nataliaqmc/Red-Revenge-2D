@@ -19,6 +19,7 @@ public float velocidade = 5;
     private bool move = true;
     private bool direcao = true;
     private float tempoAtaque;
+    private bool ataque = true;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -32,14 +33,7 @@ public float velocidade = 5;
         if (!morto && move)
         {
             distanciaDoPlayer = player.transform.position - transform.position;
-            if (Time.time - tempoAtaque >= 2.2f)
-            {
-                direcao = !direcao;
-                Flip();
-            }
-             else
-             {
-                anim.SetFloat("velocidade", 0.02f);
+            if (ataque){
                 Vector2 direcaoVetor = Vector2.right;
                 if (direcao){
                     transform.Translate(direcaoVetor.normalized * -3* Time.deltaTime);
@@ -49,6 +43,12 @@ public float velocidade = 5;
                 }
                 StartCoroutine(AtaqueRoutine());
                 tempoAtaque = Time.time;
+            }
+             if (!ataque && Time.time - tempoAtaque >= 2.5f)
+            {
+                ataque = true;
+                direcao = !direcao;
+                Flip();
             }
         }
     }
@@ -79,7 +79,7 @@ public float velocidade = 5;
     {
         move = false;
         rb.velocity = Vector2.zero;
-        rb.AddForce(Vector2.right * 5 * (-distanciaDoPlayer.x) / Mathf.Abs(distanciaDoPlayer.x), ForceMode2D.Impulse);
+        rb.AddForce(Vector2.right  * (-distanciaDoPlayer.x) / Mathf.Abs(distanciaDoPlayer.x), ForceMode2D.Impulse);
         for (float i = 0; i<0.2f; i += 0.2f)
         {
             sprite.color = Color.red;
@@ -94,10 +94,11 @@ public float velocidade = 5;
     {
         for (float i = 0; i < 0.2f; i += 0.2f)
         {
-            yield return new WaitForSeconds(1.2f);
             anim.SetFloat("velocidade", 0f);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
         }
+        ataque = false;
     }
 
     public void OnCollisionEnter2D(Collision2D other)

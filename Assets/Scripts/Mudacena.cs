@@ -20,4 +20,8 @@ public class Mudacena : MonoBehaviour
         }
         
     }
+
+    public void Muda(){
+        SceneManager.LoadScene(nome);
+    }
 }

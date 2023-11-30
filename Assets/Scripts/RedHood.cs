@@ -9,6 +9,11 @@ public class RedHood : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public Button ADS;
+    private bool anuncios = true;
+    private float TempoAnuncios = 0.0f;
+    public GameObject BotaoVida;
+    public GameObject BotaoVelocidade;
     public DynamicJoystick analogico;
     public AudioSource somespada;
     public AudioSource upgrade;
@@ -67,13 +72,20 @@ public class RedHood : MonoBehaviour
         anim = GetComponent<Animator>();
         espada = GetComponentInChildren<AtaqueEspada>();
         machado = GetComponentInChildren<AtaqueMachado>();
-        flecha = GetComponentInChildren<AtaqueFlecha>();   
+        flecha = GetComponentInChildren<AtaqueFlecha>(); 
+        BotaoVida.SetActive(false);
+        BotaoVelocidade.SetActive(false);  
     }
 
     // Update is called once per frame
     void Update()
     {
         onGround = Physics2D.Linecast(transform.position, chao.position, 1 << LayerMask.NameToLayer("Chao"));
+
+        if (!anuncios && Time.time - TempoAnuncios >= 30){
+            anuncios = true;
+            ADS.interactable = true;
+        }
 
         if (transform.position.y < -10){
             doces = 0;
@@ -87,61 +99,23 @@ public class RedHood : MonoBehaviour
             doubleJump = false;
         }
 
-
-        // if (Input.GetButtonDown("Jump") && (onGround || !doubleJump))
-        // {
-        //     jump = true;
-        //     if (!doubleJump && !onGround)
-        //     {
-        //         doubleJump = true;
-        //     }
-        // }
-
-        if (doces >= 5 && Input.GetKeyDown(KeyCode.T)){
-            upgrade.Play();
-            doces -= 5;
-            QuantidadeDoces.text = doces.ToString();
-            StartCoroutine(AumentaVida());
-            vida += 100;
-            if (vida >= 700){
-                vida = 700;
-            }
-            Barfile.fillAmount = (float) vida/vidaMaxima;
+        if (doces >= 3){
+            BotaoVelocidade.SetActive(true);
         }
-
-        if (doces >= 5 && Input.GetKeyDown(KeyCode.U)){
-            upgrade.Play();
-            doces -= 5;
-            QuantidadeDoces.text = doces.ToString();
-            speed+=0.75f;
-            if (speed >= 10){
-                speed = 10;
-            }
-            StartCoroutine(Aumentavelocidade());
+        else{
+            BotaoVelocidade.SetActive(false);
         }
-
-        // if (ataque1 && Input.GetKeyDown(KeyCode.Z))
-        // {
-        //     somespada.Play();
-        //     ataque1 = false;
-        //     podeAtacar1 = true;
-        //     ultimoAtaque1 = Time.time;
-        //     move = true;
-        // }
+        if (doces >= 5){
+            BotaoVida.SetActive(true);
+        }
+        else{
+            BotaoVida.SetActive(false);
+        }
         if (!ataque1 && Time.time - ultimoAtaque1 >= 0.6f)
         {
             ataque1 = true;
             move = false;
         }
-
-        // if (ataque2 && Input.GetKeyDown(KeyCode.X))
-        // {
-        //     ataque2 = false;
-        //     somespada.Play();
-        //     podeAtacar2 = true;
-        //     ultimoAtaque2 = Time.time;
-        //     move = true;
-        // }
         if (!ataque2 && Time.time - ultimoAtaque2 >= 1.5f)
         {
             move = false;
@@ -152,14 +126,6 @@ public class RedHood : MonoBehaviour
             ataque2 = true;
         }
 
-        // if (ataque3 && Input.GetKeyDown(KeyCode.C))
-        // {
-        //     somflecha.Play();
-        //     ataque3 = false;
-        //     podeAtacar3 = true;
-        //     ultimoAtaque3 = Time.time;
-        //     move = true;
-        // }
         if (!ataque3 && Time.time - ultimoAtaque3 >= 0.8f)
         {
             ataque3 = true;
@@ -210,6 +176,34 @@ public class RedHood : MonoBehaviour
             rb.velocity = Vector2.zero;
             rb.AddForce(Vector2.up * jumpForce);
             jump = false;
+        }
+    }
+
+    public void CuraVida(){
+        if (doces >= 5){
+            upgrade.Play();
+            doces -= 5;
+            QuantidadeDoces.text = doces.ToString();
+            StartCoroutine(AumentaVida());
+            vida += 100;
+            if (vida >= 700){
+                vida = 700;
+            }
+            Barfile.fillAmount = (float) vida/vidaMaxima;
+        }
+
+    }
+
+    public void AumentaVelocidadeTotal(){
+        if (doces >= 3){
+            upgrade.Play();
+            doces -= 3;
+            QuantidadeDoces.text = doces.ToString();
+            speed+=0.15f;
+            if (speed >= 6.75f){
+                speed = 6.75f;
+            }
+            StartCoroutine(Aumentavelocidade());
         }
     }
 
@@ -297,6 +291,15 @@ public class RedHood : MonoBehaviour
             sprite.color = Color.white;
             
         }
+    }
+
+    public void Recompensa(){
+        doces+= 10;
+        anuncios = false;
+        QuantidadeDoces.text = doces.ToString();
+        doce.Play();
+        ADS.interactable = false;
+        TempoAnuncios = Time.time;
     }
 
     public void ColetaDoce(){

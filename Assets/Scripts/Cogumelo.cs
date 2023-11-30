@@ -31,20 +31,19 @@ public class Cogumelo : Inimigo
     {
         if (!morto && move)
         {
-            distanciaDoPlayer = player.transform.position - transform.position;
-            if (Mathf.Abs(distanciaDoPlayer.x) < 7 && 
-            Mathf.Abs(distanciaDoPlayer.x) > 1.5f &&
-             Mathf.Abs(distanciaDoPlayer.y) < 5)
+            distanciaDoPlayer = player.transform.position - this.transform.position;
+            if (Mathf.Abs(distanciaDoPlayer.x) < 7f && Mathf.Abs(distanciaDoPlayer.x) > 1.5f && Mathf.Abs(distanciaDoPlayer.y) < 5f)
             {
                 rb.velocity = new Vector2(velocidade * (distanciaDoPlayer.x) / Mathf.Abs(distanciaDoPlayer.x), rb.velocity.y);
                 anim.SetFloat("velocidade", Mathf.Abs(rb.velocity.x));
             }
-            if (Mathf.Abs(distanciaDoPlayer.x) < 1.5f)
+            else if (Mathf.Abs(distanciaDoPlayer.x) < 1.5f)
             {
                 rb.velocity = new Vector2(velocidade * (distanciaDoPlayer.x) / (1.5f*Mathf.Abs(distanciaDoPlayer.x)), rb.velocity.y);
                 anim.SetTrigger("ataque");
                 som.Play();
             }
+
             float h = rb.velocity.x;
             if ((h > 0 && !facingRight) || (h < 0 && facingRight))
             {

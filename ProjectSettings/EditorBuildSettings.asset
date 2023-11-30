@@ -9,18 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/TelaInicial.unity
     guid: 94ef7db1b681e5b468ba0a57644274c7
   - enabled: 1
+    path: Assets/Scenes/FlorestaEncantada.unity
+    guid: 25864c9425eb7e4468a2fcbe34b1b711
+  - enabled: 0
     path: Assets/Scenes/Floresta.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/Scenes/Neve.unity
     guid: c51f5857edc855c459e47448137d6570
   - enabled: 1
-    path: Assets/Scenes/FInal.unity
-    guid: 0fa832c897b6cdc44bd1c8b4befd7811
-  - enabled: 1
-    path: Assets/Scenes/FlorestaEncantada.unity
-    guid: 25864c9425eb7e4468a2fcbe34b1b711
-  - enabled: 1
     path: Assets/Scenes/FlorestaEscura.unity
     guid: 521c7ed6951b3d84b9b73fa907c214d5
+  - enabled: 1
+    path: Assets/Scenes/FInal.unity
+    guid: 0fa832c897b6cdc44bd1c8b4befd7811
   m_configObjects: {}
